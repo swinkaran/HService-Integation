@@ -1,8 +1,16 @@
+using AIrDemo.Application.Configuration;
+using Microsoft.AspNetCore.Builder;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSupportedService(builder.Configuration)
+        .AddCustomConfigure(builder.Configuration)
+        .AddCoreServices(builder.Configuration)
+        .AddHttpClientServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -13,10 +21,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSwagger();
+app.UseSwagger();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
 
 app.MapControllerRoute(
     name: "default",

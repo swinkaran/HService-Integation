@@ -1,6 +1,4 @@
-﻿using AIrDemo.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace AIrDemo.Controllers
 {
@@ -8,10 +6,24 @@ namespace AIrDemo.Controllers
     [Route("[controller]")]
     public class IndividualController : ControllerBase
     {
+        private readonly IAirService _airService;
+
+        private static readonly string[] Summaries = new[]
+        {
+        "Flu", "Whooping", "Covid", "Moderna", "Bivalent", "Pfizer", "Meningo", "Novota", "Shrinje", "Influenza"
+        };
+
+        public IndividualController(IAirService airService)
+        {
+            _airService = airService;
+
+            // setup models
+        }
 
         [HttpGet]
-        public IEnumerable<IndividualDetailsResponseModel> GetIndividualDetails(IndividualDetailsRequestModel request)
+        public IEnumerable<WeatherForecast> Get()
         {
+            //return await _airService.Authorise(request);
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -22,8 +34,10 @@ namespace AIrDemo.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ImmunisationHistoryResponse> GetImmunisationHistory(string individualIdentifier)
+        [Route("history")]
+        public IEnumerable<WeatherForecast> GetAirHistory()
         {
+            //return await _airService.Authorise(request);
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -32,5 +46,19 @@ namespace AIrDemo.Controllers
             })
             .ToArray();
         }
+
+        //[HttpGet]
+        //[Route("individual")]
+        //public async Task<string> GetIndividualDetails(IndividualDetailsRequestModel request)
+        //{
+        //    return await _airService.GetIndividualDetails(request);
+        //}
+
+        //[HttpGet]
+        //[Route("history")]
+        //public async Task<string> GetImmunisationHistory(string individualIdentifier)
+        //{
+        //    return await _airService.GetIndividualImmunisationHistory(individualIdentifier);
+        //}
     }
 }
