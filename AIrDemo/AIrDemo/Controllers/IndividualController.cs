@@ -1,17 +1,29 @@
-﻿using AIrDemo.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace AIrDemo.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class IndividualController : ControllerBase
     {
+        private readonly IAirService _airService;
+
+        private static readonly string[] Summaries = new[]
+        {
+        "Flu", "Whooping", "Covid", "Moderna", "Bivalent", "Pfizer", "Meningo", "Novota", "Shrinje", "Influenza"
+        };
+
+        public IndividualController(IAirService airService)
+        {
+            _airService = airService;
+
+            // setup models
+        }
 
         [HttpGet]
-        public IEnumerable<IndividualDetailsResponseModel> GetIndividualDetails(IndividualDetailsRequestModel request)
+        public IEnumerable<WeatherForecast> Get()
         {
+            //return await _airService.Authorise(request);
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -22,8 +34,10 @@ namespace AIrDemo.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ImmunisationHistoryResponse> GetImmunisationHistory(string individualIdentifier)
+        [Route("history")]
+        public IEnumerable<WeatherForecast> GetAirHistory()
         {
+            //return await _airService.Authorise(request);
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -31,6 +45,27 @@ namespace AIrDemo.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [Route("authorise")]
+        [HttpPost]
+        public async Task<string> Authorise([FromBody] InformationProviderModel request, CancellationToken ct = default)
+        {
+            return await _airService.Authorise(request);
+        }
+
+        [Route("details")]
+        [HttpPost]
+        public async Task<string> GetIndividualDetails([FromBody] IndividualDetailsRequestModel request, CancellationToken ct = default)
+        {
+            return await _airService.GetIndividualDetails(request);
+        }
+
+        [HttpPost]
+        [Route("history")]
+        public async Task<string> GetImmunisationHistory(string individualIdentifier)
+        {
+            return await _airService.GetIndividualImmunisationHistory(individualIdentifier);
         }
     }
 }
