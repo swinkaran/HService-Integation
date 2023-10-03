@@ -2,5 +2,6 @@
 {
     public class InformationProviderModel
     {
+        public InformationProvider informationProvider {  get; set; }
     }
 }

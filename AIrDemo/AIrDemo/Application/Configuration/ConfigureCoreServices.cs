@@ -27,8 +27,8 @@ IConfiguration configuration)
 
         services.AddHttpClient("AirServiceApi", c =>
         {
-            c.DefaultRequestHeaders.Add("x-api-key", configuration["AppSettings:MedAdvisorApiKey"]);
-            c.BaseAddress = new Uri("");
+           // c.DefaultRequestHeaders.Add("x-api-key", configuration["AppSettings:MedAdvisorApiKey"]);
+            c.BaseAddress = new Uri("https://test.healthclaiming.api.humanservices.gov.au/");
         });
 
         return services;

@@ -2,8 +2,8 @@
 
 namespace AIrDemo.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class IndividualController : ControllerBase
     {
         private readonly IAirService _airService;
@@ -47,18 +47,25 @@ namespace AIrDemo.Controllers
             .ToArray();
         }
 
-        //[HttpGet]
-        //[Route("individual")]
-        //public async Task<string> GetIndividualDetails(IndividualDetailsRequestModel request)
-        //{
-        //    return await _airService.GetIndividualDetails(request);
-        //}
+        [Route("authorise")]
+        [HttpPost]
+        public async Task<string> Authorise([FromBody] InformationProviderModel request, CancellationToken ct = default)
+        {
+            return await _airService.Authorise(request);
+        }
 
-        //[HttpGet]
-        //[Route("history")]
-        //public async Task<string> GetImmunisationHistory(string individualIdentifier)
-        //{
-        //    return await _airService.GetIndividualImmunisationHistory(individualIdentifier);
-        //}
+        [Route("details")]
+        [HttpPost]
+        public async Task<string> GetIndividualDetails([FromBody] IndividualDetailsRequestModel request, CancellationToken ct = default)
+        {
+            return await _airService.GetIndividualDetails(request);
+        }
+
+        [HttpPost]
+        [Route("history")]
+        public async Task<string> GetImmunisationHistory(string individualIdentifier)
+        {
+            return await _airService.GetIndividualImmunisationHistory(individualIdentifier);
+        }
     }
 }
