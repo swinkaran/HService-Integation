@@ -5,6 +5,6 @@ namespace AIrDemo.Application.Services
     {
         Task<string> Authorise(InformationProviderModel request);
         Task<string> GetIndividualDetails(IndividualDetailsRequestModel request);
-        Task<string> GetIndividualImmunisationHistory(string individualIdentifier);
+        Task<string> GetIndividualImmunisationHistory(IndividualHistoryRequestModel individualIdentifier);
     }
 }
