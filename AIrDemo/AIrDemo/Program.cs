@@ -48,7 +48,7 @@ app.UseSwaggerUI(options =>
     options.DocumentTitle = "Demo Swagger";
 });
 
-app.MapWeatherForecastRequestEndpoints();
+//app.MapWeatherForecastRequestEndpoints();
 
 
 app.Run();

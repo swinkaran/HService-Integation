@@ -33,19 +33,6 @@ namespace AIrDemo.Controllers
             .ToArray();
         }
 
-        [HttpGet]
-        [Route("history")]
-        public IEnumerable<WeatherForecast> GetAirHistory()
-        {
-            //return await _airService.Authorise(request);
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
 
         [Route("authorise")]
         [HttpPost]
@@ -61,9 +48,17 @@ namespace AIrDemo.Controllers
             return await _airService.GetIndividualDetails(request);
         }
 
+        [HttpGet]
+        [Route("history")]
+        public async Task<string> GetAirHistory([FromBody] IndividualHistoryRequestModel request, CancellationToken ct = default)
+        {
+            //return await _airService.Authorise(request);
+            return await _airService.GetIndividualImmunisationHistory(request);
+        }
+
         [HttpPost]
         [Route("history")]
-        public async Task<string> GetImmunisationHistory(string individualIdentifier)
+        public async Task<string> GetImmunisationHistory(IndividualHistoryRequestModel individualIdentifier)
         {
             return await _airService.GetIndividualImmunisationHistory(individualIdentifier);
         }
