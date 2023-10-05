@@ -1,18 +1,26 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Spinner } from 'reactstrap';
 
-export class AirHistory extends Component {
-    static displayName = AirHistory.name;
+function AirHistory() {
+    const [airRecords, setAirRecords] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    constructor(props) {
-        super(props);
-        this.state = { airRecords: [], loading: true };
-    }
+    useEffect(() => {
+        async function populateWeatherData() {
+            try {
+                const response = await fetch('individual/history');
+                const data = await response.json();
+                setAirRecords(data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
 
-    componentDidMount() {
-        this.populateWeatherData();
-    }
+        populateWeatherData();
+    }, []);
 
-    static renderForecastsTable(airRecords) {
+    function renderForecastsTable() {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
@@ -24,36 +32,29 @@ export class AirHistory extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {airRecords.map(airRecord =>
+                    {airRecords.map(airRecord => (
                         <tr key={airRecord.date}>
                             <td>{airRecord.date}</td>
                             <td>{airRecord.temperatureC}</td>
                             <td>{airRecord.temperatureF}</td>
                             <td>{airRecord.summary}</td>
                         </tr>
-                    )}
+                    ))}
                 </tbody>
             </table>
         );
     }
 
-    render() {
-        let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : AirHistory.renderForecastsTable(this.state.airRecords);
-
-        return (
-            <div>
-                <h1 id="tabelLabel">Immunisation History</h1>
-                <p>This component demonstrates fetching data from the server.</p>
-                {contents}
-            </div>
-        );
-    }
-
-    async populateWeatherData() {
-        const response = await fetch('individual/history');
-        const data = await response.json();
-        this.setState({ airRecords: data, loading: false });
-    }
+    return (
+        <div>
+            <h1 id="tabelLabel">Immunisation History</h1>
+            <p>This component demonstrates fetching data from the server.</p>
+            {loading ? (<Spinner>Loading...</Spinner>) : (
+                renderForecastsTable()
+            )}
+        </div>
+    );
 }
+
+export { AirHistory };
+
