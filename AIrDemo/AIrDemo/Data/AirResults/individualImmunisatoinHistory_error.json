@@ -1,0 +1,13 @@
+{
+  "statusCode": "AIR-E-1005",
+  "codeType": "AIREBU",
+  "message": "The request contains validation errors.",
+  "errors": [
+    {
+      "code": "AIR-E-1061",
+      "field": "Individual Identifier",
+      "message": "Individual Identifier is invalid or has expired."
+    }
+  ],
+  "immunisationDetails": null
+}
