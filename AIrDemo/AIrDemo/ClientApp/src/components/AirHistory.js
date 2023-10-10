@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Spinner } from 'reactstrap';
+import { Spinner, Table } from 'reactstrap';
 
 function AirHistory() {
     const [airRecords, setAirRecords] = useState([]);
@@ -21,14 +21,17 @@ function AirHistory() {
     }, []);
 
     function renderForecastsTable() {
+        const airRecordMock = []
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
+                        <th>Vaccine/Brand[Batch number]</th>
+                        <th>Serial Number</th>
+                        <th>School Name</th>
+                        <th>Status</th>
+                        <th>Reason Code</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +40,8 @@ function AirHistory() {
                             <td>{airRecord.date}</td>
                             <td>{airRecord.temperatureC}</td>
                             <td>{airRecord.temperatureF}</td>
+                            <td>{airRecord.summary}</td>
+                            <td>{airRecord.summary}</td>
                             <td>{airRecord.summary}</td>
                         </tr>
                     ))}
@@ -49,6 +54,7 @@ function AirHistory() {
         <div>
             <h1 id="tabelLabel">Immunisation History</h1>
             <p>This component demonstrates fetching data from the server.</p>
+            {renderForecastsTable()}
             {loading ? (<Spinner>Loading...</Spinner>) : (
                 renderForecastsTable()
             )}
