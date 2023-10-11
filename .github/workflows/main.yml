@@ -1,0 +1,36 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
+      - name: Install SonarScanner
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+      - name: Begin SonarQube analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dotnet sonarscanner begin /k:"swinkaran_HService-Integation" /o:"swinkaran" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.msbuild.solutionFile="**/*.sln" /d:sonar.host.url="https://sonarcloud.io"
+      - name: Build and test
+        run: |
+          echo 'start build'
+          dotnet build --configuration Release
+          echo 'end build. start test'
+          dotnet test --no-build --verbosity normal
+          echo 'end test'
+      - name: End SonarQube analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
