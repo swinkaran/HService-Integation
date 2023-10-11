@@ -21,7 +21,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          dotnet sonarscanner begin /k:"swinkaran_HService-Integation" /o:"swinkaran" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet sonarscanner begin /k:"swinkaran_HService-Integation" /o:"swinkaran" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.msbuild.solutionFile="**/*.sln" /d:sonar.host.url="https://sonarcloud.io"
       - name: Build and test
         run: |
           echo 'start build'
