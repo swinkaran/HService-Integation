@@ -1,4 +1,4 @@
-import { Counter } from "./components/Counter";
+import { IdentifyIndividual } from "./components/IdentifyIndividual";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
 import { AirHistory } from "./components/AirHistory";
@@ -9,8 +9,8 @@ const AppRoutes = [
         element: <Home />
     },
     {
-        path: '/counter',
-        element: <Counter />
+        path: '/identify-individual',
+        element: <IdentifyIndividual />
     },
     {
         path: '/fetch-data',

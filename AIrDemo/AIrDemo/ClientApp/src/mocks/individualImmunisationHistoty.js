@@ -1,4 +1,4 @@
-export const airRecords = {
+export const individualImmunisationHistoty = {
   "statusCode": "AIR-I-1100",
   "codeType": "AIRIBU",
   "message": "Your request was successfully processed.",
