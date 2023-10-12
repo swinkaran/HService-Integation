@@ -1,37 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner } from 'reactstrap';
-import { identityIndividual } from "../../src/mocks/identityIndividual"
 
 function IdentifyIndividual() {
-  console.log(identityIndividual)
-  // const [individualDetails, setIndividualDetails] = useState(null);
+  const [individualDetails, setIndividualDetails] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-      // async function populateWeatherData() {
-      //     try {
-      //         const response = await fetch('individual/details');
-      //         const data = await response.json();
-      //         setIndividualDetails(data);
-      //         setLoading(false);
-      //     } catch (error) {
-      //         setLoading(false);
-      //         console.error('Error fetching data:', error);
-      //     }
-      // }
+      async function populateWeatherData() {
+          try {
+              const response = await fetch('individual/details');
+              const data = await response.json();
+              setIndividualDetails(data);
+              setLoading(false);
+          } catch (error) {
+              setLoading(false);
+              console.error('Error fetching data:', error);
+          }
+      }
 
-      // populateWeatherData();
+      populateWeatherData();
   }, []);
 
   return (
     <div>
       <h1>Individual Details</h1>
-      {loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : <IndividualDetails data={identityIndividual}/>}
+      {loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : <IndividualDetails data={individualDetails}/>}
     </div>        
   );
 }
 
 const IndividualDetails = ({ data }) => {
+  if (data === null) return <p>Data is empty</p>;
   return (
     <div>
       <p><strong>Status Code:</strong> {data.statusCode}</p>

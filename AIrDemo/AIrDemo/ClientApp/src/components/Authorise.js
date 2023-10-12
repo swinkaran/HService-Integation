@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Spinner, Table } from 'reactstrap';
-import { authoriseData } from '../mocks/authorise'
+import { Spinner } from 'reactstrap';
+
 function Authorise() {
-    const [airRecords, setAirRecords] = useState(null);
+    const [authoriseData, setAuthoriseData] = useState(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -10,7 +10,7 @@ function Authorise() {
             try {
                 const response = await fetch('individual/authorise');
                 const data = await response.json();
-                setAirRecords(data);
+                setAuthoriseData(data);
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -20,26 +20,33 @@ function Authorise() {
 
         populateWeatherData();
     }, []);
-    const { statusCode, codeType, message, accessList } = authoriseData;
+    
+
+    const AuthoriseDetails = ({ authoriseData }) => {
+        if (authoriseData === null) return <p>Data is empty</p>;
+        return (
+            <div>
+                <h1>Status Code: {authoriseData.statusCode || ""}</h1>
+                <h2>Code Type: {authoriseData.codeType || ""}</h2>
+                <p>{authoriseData.message || ""}</p>
+                <h3>Access List</h3>
+                <ul>
+                    {authoriseData && authoriseData.accessList && authoriseData.accessList.map((item, index) => (
+                    <li key={index}>
+                        {item.code}: {item.name} - {item.hasAccess ? 'Has Access' : 'No Access'}
+                    </li>
+                    ))}
+                </ul>
+            </div>
+        )
+    } 
+
     return (
-        <>
-            { loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : (
-                <div>
-                    <h1>Status Code: {statusCode}</h1>
-                    <h2>Code Type: {codeType}</h2>
-                    <p>{message}</p>
-                    <h3>Access List</h3>
-                    <ul>
-                        {accessList.map((item, index) => (
-                        <li key={index}>
-                            {item.code}: {item.name} - {item.hasAccess ? 'Has Access' : 'No Access'}
-                        </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </>
-    );
+        <div>
+        <h1>Authorise Details</h1>
+        {loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : <AuthoriseDetails authoriseData={authoriseData}/>}
+        </div>
+    )
 }
 
 export { Authorise };

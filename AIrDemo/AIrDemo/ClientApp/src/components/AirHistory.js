@@ -21,7 +21,7 @@ function AirHistory() {
         populateWeatherData();
     }, []);
 
-    function renderForecastsTable() {
+    function AirHistoryTable({ airRecords }) {
         return (
             <>
                 <h2>Immunisation Details</h2>
@@ -41,7 +41,7 @@ function AirHistory() {
                         </tr>
                     </thead>
                     <tbody>
-                        {airRecords && airRecords.immunisationDetails.encounters.map((encounter) =>
+                        {airRecords && airRecords.immunisationDetails && airRecords.immunisationDetails.encounters.map((encounter) =>
                         encounter.episodes.map((episode) => (
                             <tr key={episode.id}>
                             <td>{episode.id}</td>
@@ -68,7 +68,7 @@ function AirHistory() {
             <h1 id="tabelLabel">Immunisation History</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : (
-                renderForecastsTable()
+                <AirHistoryTable airRecords={airRecords}/>
             )}
         </div>
     );
