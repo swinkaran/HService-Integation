@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Spinner } from 'reactstrap';
-import  identityIndividual from "../../src/mocks/identityIndividual"
+import { identityIndividual } from "../../src/mocks/identityIndividual"
 
 function IdentifyIndividual() {
-  const [individualDetails, setIndividualDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
+  console.log(identityIndividual)
+  // const [individualDetails, setIndividualDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-      async function populateWeatherData() {
-          try {
-              const response = await fetch('individual/details');
-              const data = await response.json();
-              setIndividualDetails(data);
-              setLoading(false);
-          } catch (error) {
-              setLoading(false);
-              console.error('Error fetching data:', error);
-          }
-      }
+      // async function populateWeatherData() {
+      //     try {
+      //         const response = await fetch('individual/details');
+      //         const data = await response.json();
+      //         setIndividualDetails(data);
+      //         setLoading(false);
+      //     } catch (error) {
+      //         setLoading(false);
+      //         console.error('Error fetching data:', error);
+      //     }
+      // }
 
-      populateWeatherData();
+      // populateWeatherData();
   }, []);
 
   return (
@@ -33,7 +34,6 @@ function IdentifyIndividual() {
 const IndividualDetails = ({ data }) => {
   return (
     <div>
-      <h1>Individual Details</h1>
       <p><strong>Status Code:</strong> {data.statusCode}</p>
       <p><strong>Code Type:</strong> {data.codeType}</p>
       <p><strong>Message:</strong> {data.message}</p>

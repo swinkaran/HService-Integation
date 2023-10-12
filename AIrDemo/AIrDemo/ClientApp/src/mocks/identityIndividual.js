@@ -1,4 +1,4 @@
-const identityIndividual = {
+export const identityIndividual = {
     statusCode: "AIR-I-1100",
     codeType: "AIRIBU",
     message: "Your request was successfully processed.",
