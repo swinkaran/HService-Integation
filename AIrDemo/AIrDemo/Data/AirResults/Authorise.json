@@ -1,0 +1,77 @@
+{
+  "statusCode": "AIR-I-1100",
+  "codeType": "AIRIBU",
+  "message": "Your request was successfully processed.",
+  "accessList": [
+    {
+      "code": "IDV",
+      "name": "Identify individual details",
+      "hasAccess": true
+    },
+    {
+      "code": "IDGST",
+      "name": "Update Indigenous status",
+      "hasAccess": true
+    },
+    {
+      "code": "ADINDT",
+      "name": "Add/Remove additional vaccine indicator",
+      "hasAccess": true
+    },
+    {
+      "code": "NATIMM",
+      "name": "Record natural immunity",
+      "hasAccess": true
+    },
+    {
+      "code": "MEDCON",
+      "name": "Record medical contraindication",
+      "hasAccess": true
+    },
+    {
+      "code": "RECUPD",
+      "name": "Update vaccination encounter",
+      "hasAccess": true
+    },
+    {
+      "code": "RECENC",
+      "name": "Record encounter",
+      "hasAccess": true
+    },
+    {
+      "code": "NXTDUE",
+      "name": "Record planned catchup date",
+      "hasAccess": true
+    },
+    {
+      "code": "IHSPDS",
+      "name": "Get immunisatiom history statement in PDF",
+      "hasAccess": true
+    },
+    {
+      "code": "GETIHS",
+      "name": "Get immunisation history details",
+      "hasAccess": true
+    },
+    {
+      "code": "GETMEDCON",
+      "name": "Get medical contraindication history",
+      "hasAccess": true
+    },
+    {
+      "code": "GETNATIMM",
+      "name": "Get natural immunity history",
+      "hasAccess": true
+    },
+    {
+      "code": "GETVACTRL",
+      "name": "Get vaccine trial history",
+      "hasAccess": true
+    },
+    {
+      "code": "GETCOV19PDF",
+      "name": "Get COVID-19 digital certificate in PDF",
+      "hasAccess": true
+    }
+  ]
+}

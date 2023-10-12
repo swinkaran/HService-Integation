@@ -1,7 +1,8 @@
-import { Counter } from "./components/Counter";
+import { IdentifyIndividual } from "./components/IdentifyIndividual";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
 import { AirHistory } from "./components/AirHistory";
+import { Authorise } from "./components/Authorise";
 
 const AppRoutes = [
     {
@@ -9,8 +10,12 @@ const AppRoutes = [
         element: <Home />
     },
     {
-        path: '/counter',
-        element: <Counter />
+        path: '/authorise',
+        element: <Authorise />
+    },
+    {
+        path: '/identify-individual',
+        element: <IdentifyIndividual />
     },
     {
         path: '/fetch-data',
