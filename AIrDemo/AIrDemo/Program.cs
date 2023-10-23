@@ -13,6 +13,15 @@ builder.Services.AddSupportedService(builder.Configuration)
         .AddCoreServices(builder.Configuration)
         .AddHttpClientServices(builder.Configuration);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy => policy
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+    );
+});
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -30,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 };
 
-
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();

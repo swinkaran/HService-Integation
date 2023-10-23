@@ -8,19 +8,23 @@ function AirHistory() {
 
     const handleFetchBtnClick = async () => {
         setLoading(true);
-
-        const bodyData = `{
-            "identifier": ${identifier}
+        
+        const bodyData = {
+            "individualIdentifier": identifier,
             "informationProvider": {
                 "providerNumber": "2447051B",
                 "hpioNumber": "8003623233370062",
                 "hpiiNumber": "8003611566712356"
             }
-        }`;
+        };
 
         try {
             const response = await fetch('https://localhost:7085/api/Individual/history', {
-                method: "POST"
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(bodyData),
             });
             const data = await response.json();
             console.log(data)

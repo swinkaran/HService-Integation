@@ -4,18 +4,16 @@ import { Spinner } from 'reactstrap';
 function Authorise() {
     const [authoriseData, setAuthoriseData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [identifier, setIdentifier] = useState('');
 
     const handleFetchBtnClick = async () => {
         setLoading(true);
-        const bodyData = `{
-            "identifier": ${identifier}
+        const bodyData = {
             "informationProvider": {
                 "providerNumber": "2447051B",
                 "hpioNumber": "8003623233370062",
                 "hpiiNumber": "8003611566712356"
             }
-        }`;
+        };
 
         try {
             const response = await fetch('https://localhost:7085/api/Individual/authorise', {
@@ -58,17 +56,6 @@ function Authorise() {
     return (
         <div>
             <h1>Authorise Details</h1>
-            <div className="input-group mb-3 w-25">
-                <input 
-                    type="text"
-                    className="form-control"
-                    placeholder="Individual Identifier"
-                    aria-label="Individual Identifier"
-                    aria-describedby="basic-addon1"
-                    value={identifier}
-                    onChange={(e) => setIdentifier(e.target.value)}
-                />
-            </div>
             <button type="button" className="btn btn-primary" onClick={handleFetchBtnClick}>Fetch Data</button>
             {loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : <AuthoriseDetails authoriseData={authoriseData}/>}
         </div>
