@@ -3,23 +3,34 @@ import { Spinner, Table } from 'reactstrap';
 
 function AirHistory() {
     const [airRecords, setAirRecords] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [identifier, setIdentifier] = useState('');
 
-    useEffect(() => {
-        async function populateWeatherData() {
-            try {
-                const response = await fetch('individual/history');
-                const data = await response.json();
-                setAirRecords(data);
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
-                console.error('Error fetching data:', error);
+    const handleFetchBtnClick = async () => {
+        setLoading(true);
+
+        const bodyData = `{
+            "identifier": ${identifier}
+            "informationProvider": {
+                "providerNumber": "2447051B",
+                "hpioNumber": "8003623233370062",
+                "hpiiNumber": "8003611566712356"
             }
-        }
+        }`;
 
-        populateWeatherData();
-    }, []);
+        try {
+            const response = await fetch('https://localhost:7085/api/Individual/history', {
+                method: "POST"
+            });
+            const data = await response.json();
+            console.log(data)
+            setAirRecords(data);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            console.error('Error fetching data:', error);
+        }
+    }
 
     function AirHistoryTable({ airRecords }) {
         return (
@@ -67,6 +78,18 @@ function AirHistory() {
         <div>
             <h1 id="tabelLabel">Immunisation History</h1>
             <p>This component demonstrates fetching data from the server.</p>
+            <div className="input-group mb-3 w-25">
+                <input 
+                    type="text"
+                    className="form-control"
+                    placeholder="Individual Identifier"
+                    aria-label="Individual Identifier"
+                    aria-describedby="basic-addon1"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
+                />
+            </div>
+            <button type="button" className="btn btn-primary" onClick={handleFetchBtnClick}>Fetch Data</button>
             {loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : (
                 <AirHistoryTable airRecords={airRecords}/>
             )}
