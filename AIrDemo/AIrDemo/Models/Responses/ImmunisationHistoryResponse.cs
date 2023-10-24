@@ -10,7 +10,7 @@
 
     public class episode
     {
-        public string id { get; set; }
+        public int id { get; set; }
         public string vaccineBatch { get; set; }
         public string vaccineCode { get; set; }
         public string vaccineDose { get; set; }
@@ -18,8 +18,8 @@
         public string vaccineFundingType { get; set; }
         public string routeOfAdministration { get; set; }
         public Information information { get; set; }
-        public string editable { get; set; }
-        public string actionRequiredIndicator { get; set; }
+        public bool editable { get; set; }
+        public bool actionRequiredIndicator { get; set; }
     }
 
     public class Information
@@ -32,14 +32,14 @@
     public class encounter
     {
         public IList<episode> episodes { get; set; }
-        public string editable { get; set; }
+        public bool editable { get; set; }
         public string dateOfService { get; set; }
         public string dateSubmitted { get; set; }
         public string schoolId { get; set; }
-        public string administeredOverseas { get; set; }
+        public bool administeredOverseas { get; set; }
         public string countryCode { get; set; }
-        public string claimSeqNum { get; set; }
-        public string immEncSeqNum { get; set; }
+        public int claimSeqNum { get; set; }
+        public int immEncSeqNum { get; set; }
         public string claimId { get; set; }
     }
 
