@@ -31,6 +31,7 @@
   <ItemGroup>
     <Compile Remove="Controllers\ValuesController.cs" />
     <Compile Remove="Controllers\WeatherForecastController.cs" />
+    <Compile Remove="Models\ImmunisationHistoryResponse.cs" />
     <Compile Remove="Models\WeatherForecastRequest.cs" />
   </ItemGroup>
 

@@ -1,10 +1,12 @@
 ﻿
+using AIrDemo.Models.Responses;
+
 namespace AIrDemo.Application.Services
 {
     public interface IAirService
     {
-        Task<string> Authorise(InformationProviderModel request);
-        Task<string> GetIndividualDetails(IndividualDetailsRequestModel request);
-        Task<string> GetIndividualImmunisationHistory(IndividualHistoryRequestModel individualIdentifier);
+        Task<AuthorisationResponse> Authorise(InformationProviderModel request);
+        Task<IndividualDetailsResponse> GetIndividualDetails(IndividualDetailsRequestModel request);
+        Task<ImmunisationHistoryResponse> GetIndividualImmunisationHistory(IndividualHistoryRequestModel individualIdentifier);
     }
 }

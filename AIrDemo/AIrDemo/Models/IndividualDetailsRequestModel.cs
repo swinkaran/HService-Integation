@@ -60,6 +60,7 @@ namespace AIrDemo.Models
 
         [JsonPropertyName("address")]
         public Address address { get; set; }
+
         [JsonPropertyName("ihiNumber")]
         public string ihiNumber { get; set; }
     }
