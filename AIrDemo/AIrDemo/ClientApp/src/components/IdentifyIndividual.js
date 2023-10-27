@@ -65,19 +65,16 @@ function IdentifyIndividual() {
       <Form>
         <FormGroup>
           <Label for="exampleEmail">
-            Input without validation
+            Date Of Birth
           </Label>
           <Input />
           <FormFeedback>
             You will not be able to see this
           </FormFeedback>
-          <FormText>
-            Example help text that remains unchanged.
-          </FormText>
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">
-            Valid input
+            Gender
           </Label>
           <Input valid />
           <FormFeedback valid>
@@ -89,9 +86,9 @@ function IdentifyIndividual() {
         </FormGroup>
         <FormGroup>
           <Label for="examplePassword">
-            Invalid input
+            First Name
           </Label>
-          <Input invalid />
+          <Input />
           <FormFeedback>
             Oh noes! that name is already taken
           </FormFeedback>
@@ -101,7 +98,7 @@ function IdentifyIndividual() {
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">
-            Input without validation
+            Last Name
           </Label>
           <Input />
           <FormFeedback tooltip>
@@ -113,9 +110,9 @@ function IdentifyIndividual() {
         </FormGroup>
         <FormGroup className="position-relative">
           <Label for="exampleEmail">
-            Valid input
+            Initial
           </Label>
-          <Input valid />
+          <Input/>
           <FormFeedback
             tooltip
             valid
@@ -128,15 +125,51 @@ function IdentifyIndividual() {
         </FormGroup>
         <FormGroup className="position-relative">
           <Label for="examplePassword">
-            Invalid input
+            Only Name Indicator
           </Label>
-          <Input invalid />
-          <FormFeedback tooltip>
+          <Input/>
+          <FormText>
+            Example help text that remains unchanged.
+          </FormText>
+        </FormGroup>
+        <FormGroup className="position-relative">
+          <Label for="examplePassword">
+            Medicare Card Number
+          </Label>
+          <Input />
+          <FormText>
+            Example help text that remains unchanged.
+          </FormText>
+        </FormGroup>
+        <FormGroup className="position-relative">
+          <Label for="examplePassword">
+            Medicare IRN
+          </Label>
+          <Input />
+          <FormFeedback>
             Oh noes! that name is already taken
           </FormFeedback>
           <FormText>
             Example help text that remains unchanged.
           </FormText>
+        </FormGroup>
+        <FormGroup className="position-relative">
+          <Label for="examplePassword">
+            postCode
+          </Label>
+          <Input />
+          <FormFeedback>
+            Oh noes! that name is already taken
+          </FormFeedback>
+        </FormGroup>
+        <FormGroup className="position-relative">
+          <Label for="examplePassword">
+            IHI Number
+          </Label>
+          <Input />
+          <FormFeedback>
+            Oh noes! that name is already taken
+          </FormFeedback>
         </FormGroup>
       </Form>
 
