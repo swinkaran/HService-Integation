@@ -6,44 +6,19 @@ import {
   Input,
   Label,
   Spinner,
-  FormText,
-  FormGroup,
-  FormFeedback
+  FormGroup
 } from 'reactstrap';
+import { defaultFormData } from "../mocks/formData.ts";
 
 function IdentifyIndividual() {
   const [individualDetails, setIndividualDetails] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(defaultFormData);
 
-  const handleFetchBtnClick = async () => {
+  const handleSubmit = async () => {
     setLoading(true);
-    const defaultFormData = {
-      "individual": {
-        "personalDetails": {
-          "dateOfBirth": "string",
-          "gender": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "initial": "string",
-          "onlyNameIndicator": true
-        },
-        "medicareCard": {
-          "medicareCardNumber": "string",
-          "medicareIRN": "string"
-        },
-        "address": {
-          "postCode": "string"
-        },
-        "ihiNumber": "string"
-      },
-      "informationProvider": {
-        "providerNumber": "2447051B",
-        "hpioNumber": "8003623233370062",
-        "hpiiNumber": "8003611566712356"
-      }
-    };
-
+    console.log(formData);
+    
     try {
         const response = await fetch('https://localhost:7085/api/Individual/details', {
           method: "POST",
@@ -61,6 +36,45 @@ function IdentifyIndividual() {
     }
   }
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevFormData) => {
+        const keys = name.split('.');
+        let data = { ...prevFormData };
+        keys.reduce((o, k, i) => {
+            if (i === keys.length - 1) {
+                o[k] = value;
+            } else {
+                o[k] = o[k] || {};
+            }
+            return o[k];
+        }, data);
+
+        return data;
+    });
+  }
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    const booleanValue = value === "true";
+
+    setFormData((prevFormData) => {
+        const keys = name.split('.');
+        let data = { ...prevFormData };
+        keys.reduce((o, k, i) => {
+            if (i === keys.length - 1) {
+                o[k] = booleanValue;
+            } else {
+                o[k] = o[k] || {};
+            }
+            return o[k];
+        }, data);
+
+        return data;
+    });
+  }
+
   return (
     <div>
       <h1>Individual Details</h1>
@@ -72,7 +86,11 @@ function IdentifyIndividual() {
               <Label for="dob">
                 Date Of Birth
               </Label>
-              <Input defaultValue={"12/12/1990"}/>
+              <Input 
+                name="individual.personalDetails.dateOfBirth"
+                defaultValue={defaultFormData.individual.personalDetails.dateOfBirth}
+                onChange={handleInputChange}
+              />
             </FormGroup>
           </Col>
           <Col md={6}>
@@ -82,13 +100,15 @@ function IdentifyIndividual() {
               </Label>
               <Input
                 id="exampleSelect"
-                name="select"
+                name="individual.personalDetails.gender"
                 type="select"
+                onChange={handleSelectChange}
+                defaultValue={defaultFormData.individual.personalDetails.gender}
               >
-                <option>
+                <option value="Male">
                   Male
                 </option>
-                <option>
+                <option value="Female">
                   Female
                 </option>
               </Input>
@@ -102,7 +122,11 @@ function IdentifyIndividual() {
               <Label for="firstName">
                 First Name
               </Label>
-              <Input defaultValue={"John"}/>
+              <Input 
+                name="individual.personalDetails.firstName"
+                defaultValue={defaultFormData.individual.personalDetails.firstName}
+                onChange={handleInputChange}
+              />
             </FormGroup>
           </Col>
           <Col md={6}>
@@ -110,7 +134,11 @@ function IdentifyIndividual() {
               <Label for="lastName">
                 Last Name
               </Label>
-              <Input defaultValue={"Doe"}/>
+              <Input
+                name="individual.personalDetails.lastName"
+                defaultValue={defaultFormData.individual.personalDetails.lastName}
+                onChange={handleInputChange}
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -121,24 +149,30 @@ function IdentifyIndividual() {
               <Label for="initial">
                 Initial
               </Label>
-              <Input defaultValue={"JD"}/>
+              <Input
+                name="individual.personalDetails.initial"
+                defaultValue={defaultFormData.individual.personalDetails.initial}
+                onChange={handleInputChange}
+              />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup className="position-relative">
-              <Label for="onlyNameIndicatior">
+              <Label for="onlyNameIndicator">
                 Only Name Indicator
               </Label>
               <Input
                 id="onlyNameIndicatior"
-                name="onlyNameIndicatiorSelect"
+                name="individual.personalDetails.onlyNameIndicator"
                 type="select"
+                onChange={handleSelectChange}
+                defaultValue={defaultFormData.individual.personalDetails.onlyNameIndicator}
               >
-                <option>
-                  Yes
+                <option value="true">
+                  true
                 </option>
-                <option>
-                  No
+                <option value="false">
+                  false
                 </option>
               </Input>
             </FormGroup>
@@ -148,10 +182,14 @@ function IdentifyIndividual() {
         <Row>
           <Col md={6}>
             <FormGroup className="position-relative">
-              <Label for="examplePassword">
+              <Label for="medicareCardNumber">
                 Medicare Card Number
               </Label>
-              <Input defaultValue={"123"}/>
+              <Input
+                name="individual.medicareCard.medicareCardNumber"
+                defaultValue={defaultFormData.individual.medicareCard.medicareCardNumber}
+                onChange={handleInputChange}
+              />
             </FormGroup>
           </Col>
 
@@ -160,7 +198,11 @@ function IdentifyIndividual() {
               <Label for="examplePassword">
                 Medicare IRN
               </Label>
-              <Input defaultValue={"1"}/>
+              <Input
+                name="individual.medicareCard.medicareIRN"
+                defaultValue={defaultFormData.individual.medicareCard.medicareIRN}
+                onChange={handleInputChange}
+              />
             </FormGroup>
           </Col>
         </Row>
@@ -168,24 +210,33 @@ function IdentifyIndividual() {
         <Row>
           <Col md={6}>
             <FormGroup className="position-relative">
-              <Label for="examplePassword">
+              <Label for="postCode">
                 postCode
               </Label>
-              <Input defaultValue={"3000"}/>
+              <Input
+                name="individual.address.postCode"
+                defaultValue={defaultFormData.individual.address.postCode}
+                onChange={handleInputChange}
+              />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup className="position-relative">
-              <Label for="examplePassword">
+              <Label for="ihiNumber">
                 IHI Number
               </Label>
-              <Input defaultValue={"123"}/>
+              <Input
+                name="individual.ihiNumber"
+                defaultValue={defaultFormData.individual.ihiNumber}
+                onChange={handleInputChange}
+              />
             </FormGroup>
           </Col>
         </Row>
+        <button type="button" onClick={handleSubmit} className="btn btn-primary">Submit</button>
       </Form>
 
-      <button type="button" className="btn btn-primary" onClick={handleFetchBtnClick}>Fetch Data</button>
+      
       {loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : <IndividualDetails data={individualDetails}/>}
     </div>        
   );
