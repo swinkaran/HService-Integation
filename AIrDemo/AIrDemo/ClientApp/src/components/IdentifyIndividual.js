@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
+  Row,
+  Col,
   Form,
   Input,
   Label,
@@ -12,10 +14,11 @@ import {
 function IdentifyIndividual() {
   const [individualDetails, setIndividualDetails] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({});
 
   const handleFetchBtnClick = async () => {
     setLoading(true);
-    const bodyData = {
+    const defaultFormData = {
       "individual": {
         "personalDetails": {
           "dateOfBirth": "string",
@@ -47,7 +50,7 @@ function IdentifyIndividual() {
           headers: {
               "Content-Type": "application/json",
           },
-          body: JSON.stringify(bodyData),
+          body: JSON.stringify(formData),
       });
         const data = await response.json();
         setIndividualDetails(data);
@@ -63,114 +66,123 @@ function IdentifyIndividual() {
       <h1>Individual Details</h1>
 
       <Form>
-        <FormGroup>
-          <Label for="exampleEmail">
-            Date Of Birth
-          </Label>
-          <Input />
-          <FormFeedback>
-            You will not be able to see this
-          </FormFeedback>
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleEmail">
-            Gender
-          </Label>
-          <Input valid />
-          <FormFeedback valid>
-            Sweet! that name is available
-          </FormFeedback>
-          <FormText>
-            Example help text that remains unchanged.
-          </FormText>
-        </FormGroup>
-        <FormGroup>
-          <Label for="examplePassword">
-            First Name
-          </Label>
-          <Input />
-          <FormFeedback>
-            Oh noes! that name is already taken
-          </FormFeedback>
-          <FormText>
-            Example help text that remains unchanged.
-          </FormText>
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleEmail">
-            Last Name
-          </Label>
-          <Input />
-          <FormFeedback tooltip>
-            You will not be able to see this
-          </FormFeedback>
-          <FormText>
-            Example help text that remains unchanged.
-          </FormText>
-        </FormGroup>
-        <FormGroup className="position-relative">
-          <Label for="exampleEmail">
-            Initial
-          </Label>
-          <Input/>
-          <FormFeedback
-            tooltip
-            valid
-          >
-            Sweet! that name is available
-          </FormFeedback>
-          <FormText>
-            Example help text that remains unchanged.
-          </FormText>
-        </FormGroup>
-        <FormGroup className="position-relative">
-          <Label for="examplePassword">
-            Only Name Indicator
-          </Label>
-          <Input/>
-          <FormText>
-            Example help text that remains unchanged.
-          </FormText>
-        </FormGroup>
-        <FormGroup className="position-relative">
-          <Label for="examplePassword">
-            Medicare Card Number
-          </Label>
-          <Input />
-          <FormText>
-            Example help text that remains unchanged.
-          </FormText>
-        </FormGroup>
-        <FormGroup className="position-relative">
-          <Label for="examplePassword">
-            Medicare IRN
-          </Label>
-          <Input />
-          <FormFeedback>
-            Oh noes! that name is already taken
-          </FormFeedback>
-          <FormText>
-            Example help text that remains unchanged.
-          </FormText>
-        </FormGroup>
-        <FormGroup className="position-relative">
-          <Label for="examplePassword">
-            postCode
-          </Label>
-          <Input />
-          <FormFeedback>
-            Oh noes! that name is already taken
-          </FormFeedback>
-        </FormGroup>
-        <FormGroup className="position-relative">
-          <Label for="examplePassword">
-            IHI Number
-          </Label>
-          <Input />
-          <FormFeedback>
-            Oh noes! that name is already taken
-          </FormFeedback>
-        </FormGroup>
+        <Row>
+          <Col md={6}>
+            <FormGroup>
+              <Label for="dob">
+                Date Of Birth
+              </Label>
+              <Input defaultValue={"12/12/1990"}/>
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Label for="gender">
+                Gender
+              </Label>
+              <Input
+                id="exampleSelect"
+                name="select"
+                type="select"
+              >
+                <option>
+                  Male
+                </option>
+                <option>
+                  Female
+                </option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={6}>
+            <FormGroup>
+              <Label for="firstName">
+                First Name
+              </Label>
+              <Input defaultValue={"John"}/>
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Label for="lastName">
+                Last Name
+              </Label>
+              <Input defaultValue={"Doe"}/>
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="initial">
+                Initial
+              </Label>
+              <Input defaultValue={"JD"}/>
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="onlyNameIndicatior">
+                Only Name Indicator
+              </Label>
+              <Input
+                id="onlyNameIndicatior"
+                name="onlyNameIndicatiorSelect"
+                type="select"
+              >
+                <option>
+                  Yes
+                </option>
+                <option>
+                  No
+                </option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </Row>
+        
+        <Row>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="examplePassword">
+                Medicare Card Number
+              </Label>
+              <Input defaultValue={"123"}/>
+            </FormGroup>
+          </Col>
+
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="examplePassword">
+                Medicare IRN
+              </Label>
+              <Input defaultValue={"1"}/>
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="examplePassword">
+                postCode
+              </Label>
+              <Input defaultValue={"3000"}/>
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="examplePassword">
+                IHI Number
+              </Label>
+              <Input defaultValue={"123"}/>
+            </FormGroup>
+          </Col>
+        </Row>
       </Form>
 
       <button type="button" className="btn btn-primary" onClick={handleFetchBtnClick}>Fetch Data</button>
