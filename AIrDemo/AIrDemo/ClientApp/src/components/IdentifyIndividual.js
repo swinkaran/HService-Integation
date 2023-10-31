@@ -1,45 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Spinner } from 'reactstrap';
+import React, { useState } from 'react';
+import { 
+  Row,
+  Col,
+  Form,
+  Input,
+  Label,
+  Spinner,
+  FormGroup
+} from 'reactstrap';
+import { defaultFormData } from "../mocks/formData.ts";
 
 function IdentifyIndividual() {
   const [individualDetails, setIndividualDetails] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState(defaultFormData);
 
-  const handleFetchBtnClick = async () => {
+  const handleSubmit = async () => {
     setLoading(true);
-    const bodyData = {
-      "individual": {
-        "personalDetails": {
-          "dateOfBirth": "string",
-          "gender": "string",
-          "firstName": "string",
-          "lastName": "string",
-          "initial": "string",
-          "onlyNameIndicator": true
-        },
-        "medicareCard": {
-          "medicareCardNumber": "string",
-          "medicareIRN": "string"
-        },
-        "address": {
-          "postCode": "string"
-        },
-        "ihiNumber": "string"
-      },
-      "informationProvider": {
-        "providerNumber": "2447051B",
-        "hpioNumber": "8003623233370062",
-        "hpiiNumber": "8003611566712356"
-      }
-    };
-
+    
     try {
         const response = await fetch('https://localhost:7085/api/Individual/details', {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
           },
-          body: JSON.stringify(bodyData),
+          body: JSON.stringify(formData),
       });
         const data = await response.json();
         setIndividualDetails(data);
@@ -50,10 +35,207 @@ function IdentifyIndividual() {
     }
   }
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevFormData) => {
+        const keys = name.split('.');
+        let data = { ...prevFormData };
+        keys.reduce((o, k, i) => {
+            if (i === keys.length - 1) {
+                o[k] = value;
+            } else {
+                o[k] = o[k] || {};
+            }
+            return o[k];
+        }, data);
+
+        return data;
+    });
+  }
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    const booleanValue = value === "true";
+
+    setFormData((prevFormData) => {
+        const keys = name.split('.');
+        let data = { ...prevFormData };
+        keys.reduce((o, k, i) => {
+            if (i === keys.length - 1) {
+                o[k] = booleanValue;
+            } else {
+                o[k] = o[k] || {};
+            }
+            return o[k];
+        }, data);
+
+        return data;
+    });
+  }
+
   return (
     <div>
       <h1>Individual Details</h1>
-      <button type="button" className="btn btn-primary" onClick={handleFetchBtnClick}>Fetch Data</button>
+
+      <Form>
+        <Row>
+          <Col md={6}>
+            <FormGroup>
+              <Label for="dob">
+                Date Of Birth
+              </Label>
+              <Input 
+                name="individual.personalDetails.dateOfBirth"
+                defaultValue={defaultFormData.individual.personalDetails.dateOfBirth}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Label for="gender">
+                Gender
+              </Label>
+              <Input
+                id="exampleSelect"
+                name="individual.personalDetails.gender"
+                type="select"
+                onChange={handleSelectChange}
+                defaultValue={defaultFormData.individual.personalDetails.gender}
+              >
+                <option value="Male">
+                  Male
+                </option>
+                <option value="Female">
+                  Female
+                </option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={6}>
+            <FormGroup>
+              <Label for="firstName">
+                First Name
+              </Label>
+              <Input 
+                name="individual.personalDetails.firstName"
+                defaultValue={defaultFormData.individual.personalDetails.firstName}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Label for="lastName">
+                Last Name
+              </Label>
+              <Input
+                name="individual.personalDetails.lastName"
+                defaultValue={defaultFormData.individual.personalDetails.lastName}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="initial">
+                Initial
+              </Label>
+              <Input
+                name="individual.personalDetails.initial"
+                defaultValue={defaultFormData.individual.personalDetails.initial}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="onlyNameIndicator">
+                Only Name Indicator
+              </Label>
+              <Input
+                id="onlyNameIndicatior"
+                name="individual.personalDetails.onlyNameIndicator"
+                type="select"
+                onChange={handleSelectChange}
+                defaultValue={defaultFormData.individual.personalDetails.onlyNameIndicator}
+              >
+                <option value="true">
+                  true
+                </option>
+                <option value="false">
+                  false
+                </option>
+              </Input>
+            </FormGroup>
+          </Col>
+        </Row>
+        
+        <Row>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="medicareCardNumber">
+                Medicare Card Number
+              </Label>
+              <Input
+                name="individual.medicareCard.medicareCardNumber"
+                defaultValue={defaultFormData.individual.medicareCard.medicareCardNumber}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+          </Col>
+
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="examplePassword">
+                Medicare IRN
+              </Label>
+              <Input
+                name="individual.medicareCard.medicareIRN"
+                defaultValue={defaultFormData.individual.medicareCard.medicareIRN}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="postCode">
+                postCode
+              </Label>
+              <Input
+                name="individual.address.postCode"
+                defaultValue={defaultFormData.individual.address.postCode}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+          </Col>
+          <Col md={6}>
+            <FormGroup className="position-relative">
+              <Label for="ihiNumber">
+                IHI Number
+              </Label>
+              <Input
+                name="individual.ihiNumber"
+                defaultValue={defaultFormData.individual.ihiNumber}
+                onChange={handleInputChange}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
+        <button type="button" onClick={handleSubmit} className="btn btn-primary">Submit</button>
+      </Form>
+
+      
       {loading ? (<div style={{display: 'flex', justifyContent: 'center'}}><Spinner>Loading...</Spinner></div>) : <IndividualDetails data={individualDetails}/>}
     </div>        
   );
