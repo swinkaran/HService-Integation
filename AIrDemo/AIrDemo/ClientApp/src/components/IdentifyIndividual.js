@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Row,
   Col,
@@ -17,7 +17,6 @@ function IdentifyIndividual() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    console.log(formData);
     
     try {
         const response = await fetch('https://localhost:7085/api/Individual/details', {
