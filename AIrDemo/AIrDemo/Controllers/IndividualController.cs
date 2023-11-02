@@ -57,15 +57,15 @@ namespace AIrDemo.Controllers
 
         [HttpPost]
         [Route("history")]
-        public async Task<ImmunisationHistoryResponse> GetImmunisationHistory()
+        public async Task<ImmunisationHistoryResponse> GetImmunisationHistory([FromBody] IndividualHistoryRequestModel request, CancellationToken ct = default)
         {
-            IndividualHistoryRequestModel individualIdentifier = new IndividualHistoryRequestModel
-            {
-                individualIdentifier = "wXrN7bKidsqHQVUUW3WGpOMqkgdwDwdTfEgIe4PEaESYj0qNDFRSdnqCM0BvbRF-dHZBKEARhH-A8nqCL3XfoQGPH8QDag8rSIMzrOmv6a72OY_92X9U6Q==",
-                informationProvider = GetInformationProvider()
+            //IndividualHistoryRequestModel individualIdentifier = new IndividualHistoryRequestModel
+            //{
+            //    individualIdentifier = "wXrN7bKidsqHQVUUW3WGpOMqkgdwDwdTfEgIe4PEaESYj0qNDFRSdnqCM0BvbRF-dHZBKEARhH-A8nqCL3XfoQGPH8QDag8rSIMzrOmv6a72OY_92X9U6Q==",
+            //    informationProvider = GetInformationProvider()
 
-            };
-            return await _airService.GetIndividualImmunisationHistory(individualIdentifier);
+            //};
+            return await _airService.GetIndividualImmunisationHistory(request);
         }
 
         private InformationProvider GetInformationProvider()
